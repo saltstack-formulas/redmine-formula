@@ -1,0 +1,12 @@
+{% import_yaml "redmine/defaults.yaml" as default_settings %}
+{% import_yaml "redmine/osfamilymap.yaml" as os_family_map %}
+
+{% set defaults = salt['grains.filter_by'](default_settings
+  , default='redmine'
+  , merge=salt['grains.filter_by'](os_family_map
+    , grain="os_family"
+    , merge=salt['pillar.get']('redmine:lookup')
+  )
+) %}
+
+{% set redmine = salt['pillar.get']('redmine') %}

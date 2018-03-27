@@ -1,0 +1,4 @@
+redmine:
+  basedir: /opt/redmine
+  setup_user_prefix: redmine-setup-
+  setup_group: redmine-setup

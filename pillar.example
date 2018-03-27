@@ -1,0 +1,45 @@
+redmine:
+  # Override defaults.yaml and osmap.yaml
+  lookup:
+    basedir: /opt/redmine
+    # Prefix for setup users
+    # (The Web user must not be able to alter any code.)
+    setup_user_prefix: redmine-setup-
+    setup_group: redmine-setup
+    # Default Web user; this is used for operations
+    web_user: www-data
+    web_group: www-data
+    # Packages which must be installed
+    dependencies:
+      - subversion
+      - git-core
+
+  instances:
+    # The instance's name
+    work:
+      # Keep those up to date!
+      # See https://www.redmine.org/projects/redmine/wiki/Download for new releases!
+      svn_uri: https://svn.redmine.org/redmine/branches/3.4-stable
+      revision: HEAD
+
+      web_user: www-data
+      web_group: www-data
+
+      language: en
+
+      database:
+        # see https://www.redmine.org/projects/redmine/wiki/RedmineInstall#Step-3-Database-connection-configuration
+        production:
+          adapter: mysql2
+          database: redmine
+          host: localhost
+          username: redmine
+          password: my_password
+
+      # The plugins to use in this instance
+      plugins:
+        # The plugin directory's name
+        redmine_ics_export:
+          uri: https://github.com/buschmais/redmics.git
+        redmine_timesheet_plugin:
+          uri: https://github.com/arkhitech/redmine_timesheet_plugin.git

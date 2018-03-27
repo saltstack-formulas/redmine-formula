@@ -19,3 +19,13 @@ Available states
 
 Clones the repo, calls bundler and rake, sets up plugins.
 Is able to handle multiple instances.
+
+``redmine.svn_ca_cert``
+-----------------------
+
+(Currently FreeBSD only.)
+
+This is a bit hacky. Although ca_root_nss is installed,
+subversion does not trust Redmine's SVN server.
+
+By adding a cross-signed cert this is changed.
