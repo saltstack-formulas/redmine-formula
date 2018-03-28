@@ -58,13 +58,6 @@ redmine_{{ instance }}_public:
     - group: {{ setup_group }}
     - mode: 755
 
-redmine_{{ instance }}_log:
-  file.directory:
-    - name: {{ instance_dir }}/log
-    - user: {{ web_user }}
-    - group: {{ setup_group }}
-    - mode: 775
-
 redmine_{{ instance }}_log_production:
   file.managed:
     - name: {{ instance_dir }}/log/production.log
@@ -72,7 +65,7 @@ redmine_{{ instance }}_log_production:
     - group: {{ setup_group }}
     - mode: 664
 
-  {% for dir in ['files', 'tmp', 'public/plugin_assets'] %}
+  {% for dir in ['files', 'log', 'tmp', 'public/plugin_assets'] %}
 redmine_{{ instance }}_writable_{{ dir }}:
   file.directory:
     - name: {{ instance_dir }}/{{ dir }}

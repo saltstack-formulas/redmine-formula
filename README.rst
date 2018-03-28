@@ -17,13 +17,19 @@ Available states
 ``redmine.install``
 -------------------
 
-Clones the repo, calls bundler and rake, sets up plugins.
+Clones the repo, calls bundler and rake.
 Is able to handle multiple instances.
+
+``redmine.plugins``
+-------------------
+
+Clones the plugin repo, calls bundler and rake, sets up plugins.
+Is able to handle multiple instances with multiple plugins.
 
 ``redmine.svn_ca_cert``
 -----------------------
 
-(Currently FreeBSD only.)
+(Currently FreeBSD only. Include before ``redmine.install``!)
 
 This is a bit hacky. Although ca_root_nss is installed,
 subversion does not trust Redmine's SVN server.

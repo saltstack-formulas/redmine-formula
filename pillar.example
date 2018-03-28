@@ -41,5 +41,8 @@ redmine:
         # The plugin directory's name
         redmine_ics_export:
           uri: https://github.com/buschmais/redmics.git
+          revision: HEAD
+          branch: master
         redmine_timesheet_plugin:
           uri: https://github.com/arkhitech/redmine_timesheet_plugin.git
+          remove: True
