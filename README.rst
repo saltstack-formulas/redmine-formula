@@ -14,6 +14,15 @@ Available states
 .. contents::
     :local:
 
+``redmine.managed``
+-------------------
+
+includes:
+
+- ``redmine.svn_ca_cert``
+- ``redmine.install``
+- ``redmine.plugins``
+
 ``redmine.install``
 -------------------
 
