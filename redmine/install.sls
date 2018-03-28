@@ -107,11 +107,21 @@ redmine_{{ instance }}_configuration:
     - require:
       - svn: redmine_{{ instance }}_repo
 
-redmine_{{ instance }}_bundler_install:
+redmine_{{ instance }}_bundle_install:
   cmd.run:
     - name: bundle install --without development test --path vendor/bundle
     - cwd: {{ instance_dir }}
     - runas: {{ setup_user }}
+    - onchanges:
+      - svn: redmine_{{ instance }}_repo
+
+redmine_{{ instance }}_bundle_update:
+  cmd.run:
+    - name: bundle update
+    - cwd: {{ instance_dir }}
+    - runas: {{ setup_user }}
+    - require:
+      - cmd: redmine_{{ instance }}_bundle_install
     - onchanges:
       - svn: redmine_{{ instance }}_repo
 
@@ -123,7 +133,7 @@ redmine_{{ instance }}_generate_secret_token:
     - onchanges:
       - svn: redmine_{{ instance }}_repo
     - require:
-      - cmd: redmine_{{ instance }}_bundler_install
+      - cmd: redmine_{{ instance }}_bundle_install
 
 redmine_{{ instance }}_database_migration:
   cmd.run:
@@ -135,7 +145,7 @@ redmine_{{ instance }}_database_migration:
     - onchanges:
       - svn: redmine_{{ instance }}_repo
     - require:
-      - cmd: redmine_{{ instance }}_bundler_install
+      - cmd: redmine_{{ instance }}_bundle_install
       - cmd: redmine_{{ instance }}_generate_secret_token
 
 redmine_{{ instance }}_load_default_data:
@@ -149,8 +159,6 @@ redmine_{{ instance }}_load_default_data:
     - onchanges:
       - svn: redmine_{{ instance }}_repo
     - require:
-      - cmd: redmine_{{ instance }}_bundler_install
+      - cmd: redmine_{{ instance }}_bundle_install
       - cmd: redmine_{{ instance }}_database_migration
-
-# TODO: bundler update / upgrade/update in general
 {% endfor %}

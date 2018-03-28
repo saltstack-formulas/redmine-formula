@@ -29,7 +29,8 @@ redmine_{{ instance }}_{{ plugin }}_repo:
     - force_fetch: True
     - force_reset: True
     - onchanges_in:
-      - cmd: redmine_{{ instance }}_bundler_install
+      - cmd: redmine_{{ instance }}_bundle_install
+      - cmd: redmine_{{ instance }}_bundle_update
       - cmd: redmine_{{ instance }}_plugins_migrate
       - cmd: redmine_{{ instance }}_restart_passenger
 
