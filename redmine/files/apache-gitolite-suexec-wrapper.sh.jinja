@@ -1,0 +1,14 @@
+#!/bin/sh
+#
+# Suexec wrapper for gitolite-shell
+#
+ 
+export GIT_PROJECT_ROOT="{{ git_project_root }}"
+export GITOLITE_HTTP_HOME="{{ gitolite_http_home }}"
+export UMASK="0027"
+export GIT_HTTP_EXPORT_ALL=1
+export REMOTE_USER="{{ gitolite_http_remote_user }}"
+export HTTP_REMOTE_USER="$REMOTE_USER"
+export AUTH_USER="$REMOTE_USER"
+
+exec {{ gitolite_shell }}

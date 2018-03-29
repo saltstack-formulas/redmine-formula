@@ -51,3 +51,15 @@ By adding a cross-signed cert this is changed.
 
 Requires ``apache-formula`` to be available.
 
+Add this to your apache config:
+
+``Include /etc/apache2/conf-available/redmine-${INSTANCE_NAME}.conf``
+
+``redmine.apache.gitolite_config_snippets``
+-------------------------------------------
+
+Requires ``apache-formula`` to be available.
+
+Add this to your apache config:
+
+``Include /etc/apache2/conf-available/redmine-${INSTANCE_NAME}-gitolite.conf``

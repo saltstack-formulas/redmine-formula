@@ -2,3 +2,11 @@ redmine:
   basedir: /opt/redmine
   setup_user_prefix: redmine-setup-
   setup_group: redmine-setup
+  git_project_root: /home/git/repositories
+  gitolite_http_home: /home/git
+  gitolite_http_remote_user: http-access
+  gitolite_src: /home/git/gitolite/src
+  git_alias: /git
+  db_driver_pkgs: []
+  git_user: git
+  git_group: git

@@ -13,6 +13,9 @@ redmine:
     dependencies:
       - subversion
       - git-core
+    # Only for redmine.apache.gitolite_config_snippets
+    db_driver_pkgs:
+      - p5-DBD-mysql
 
   instances:
     # The instance's name
@@ -26,6 +29,18 @@ redmine:
       web_group: www-data
       # optional: makes redmine.apache.config_snippets use an alias instead of setting DocumentRoot
       apache_alias: /redmine-work
+
+      git_user: git
+      git_group: git
+      git_alias: /git-work
+      ## for mysql
+      RedmineDSN: "DBI:mysql:database=redmine_instance;host=localhost" 
+      ## for postgres
+      # RedmineDSN_ "DBI:Pg:dbname=databasename;host=my.db.server" 
+      ## for SQLite3
+      # RedmineDSN: "DBI:SQLite:dbname=database.db" 
+      # Allow only (i.e.) developers to commit code
+      #RedmineDbWhereClause: " AND roles.id IN (4)"
 
       language: en
 

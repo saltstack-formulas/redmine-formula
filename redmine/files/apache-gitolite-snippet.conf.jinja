@@ -1,0 +1,30 @@
+
+# Zugriff auf Repositories
+PerlRequire {{ apache_redmine_dir }}/load_custom_perl_modules.pl
+PerlLoadModule Apache::Redmine
+# Bypass gitolite's update hook
+SetEnv GL_BYPASS_UPDATE_HOOK
+
+SuexecUserGroup {{ git_user }} {{ git_group }}
+ScriptAlias {{ git_alias }}/ {{ wrapper }}/
+<Directory {{ apache_suexec_docroot }}/gitolite>
+  Require all denied
+</Directory>
+<Location "{{ git_alias }}">
+  AuthType Basic
+  AuthUserFile {{ apache_redmine_dir }}/htpasswd
+  AuthName "Redmine git repositories"
+  Require valid-user
+  PerlAccessHandler Apache::Authn::Redmine::access_handler
+  PerlAuthenHandler Apache::Authn::Redmine::authen_handler
+
+  RedmineDSN "{{ RedmineDSN }}" 
+{%- if RedmineDbWhereClause %}
+  # Allow only developers to commit code
+  RedmineDbWhereClause " AND roles.id IN (4)"
+{%- endif %}
+  RedmineDbUser "{{ RedmineDbUser }}" 
+  RedmineDbPass "{{ RedmineDbPass }}" 
+  RedmineGitSmartHttp yes
+</Location>
+
