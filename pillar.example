@@ -24,6 +24,8 @@ redmine:
 
       web_user: www-data
       web_group: www-data
+      # optional: makes redmine.apache.config_snippets use an alias instead of setting DocumentRoot
+      apache_alias: /redmine-work
 
       language: en
 

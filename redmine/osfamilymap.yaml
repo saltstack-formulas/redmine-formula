@@ -6,6 +6,7 @@ Debian:
     - git-core
     - bundler
     - imagemagick
+  apache_snippet_dir: /etc/apache2/conf-available
 FreeBSD:
   web_user: www
   web_group: www
@@ -16,3 +17,4 @@ FreeBSD:
     - ImageMagick-nox11
     # subversion needs this to verify TLS connections / x509 certs
     - ca_root_nss
+  apache_snippet_dir: /usr/local/etc/apache24/extra

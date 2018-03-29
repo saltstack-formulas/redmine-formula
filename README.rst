@@ -22,6 +22,7 @@ includes:
 - ``redmine.svn_ca_cert``
 - ``redmine.install``
 - ``redmine.plugins``
+- ``redmine.apache.config_snippets``
 
 ``redmine.install``
 -------------------
@@ -44,3 +45,9 @@ This is a bit hacky. Although ca_root_nss is installed,
 subversion does not trust Redmine's SVN server.
 
 By adding a cross-signed cert this is changed.
+
+``redmine.apache.config_snippets``
+----------------------------------
+
+Requires ``apache-formula`` to be available.
+

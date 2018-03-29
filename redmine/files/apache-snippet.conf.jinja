@@ -1,0 +1,16 @@
+{% if not apache_alias %}
+DocumentRoot {{ instance_dir }}/public
+{% else %}
+Alias "{{ apache_alias }}" "{{ instance_dir }}/public"
+PassengerAppRoot {{ instance_dir }}
+RailsBaseURI {{ apache_alias }}
+{% endif %}
+RailsEnv production
+PassengerUser {{ web_user}}
+PassengerGroup {{ web_group }}
+PassengerStartTimeout 60
+PassengerMinInstances 3
+<Directory {{ instance_dir }}/public>
+  Options -Indexes -ExecCGI -MultiViews
+  AllowOverride all
+</Directory>
