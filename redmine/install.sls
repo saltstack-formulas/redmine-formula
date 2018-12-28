@@ -79,7 +79,7 @@ redmine_{{ instance }}_writable_{{ dir }}:
     {% else %}
     - group: {{ web_group }}
     - dir_mode: 755
-    - file_mode: 755
+    - file_mode: 644
     {% endif %}
     - recurse:
       - user
