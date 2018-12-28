@@ -41,12 +41,14 @@ redmine_{{ instance }}_base:
       - user: redmine_{{ instance }}_setup_user
 
 redmine_{{ instance }}_repo:
-  svn.latest:
-    - name: {{ cfg.svn_uri }}
+  git.latest:
+    - name: {{ cfg.git_uri }}
     - target: {{ instance_dir }}
     - user: {{ setup_user }}
     - rev: {{ cfg.get('revision', 'HEAD') }}
-    - force: True
+    - branch: {{ cfg.get('branch', 'master') }}
+    - force_fetch: True
+    - force_reset: True
     - require:
       - file: redmine_{{ instance }}_base
       - pkg: redmine_dependencies
@@ -94,7 +96,7 @@ redmine_{{ instance }}_database_config:
     - contents: |
         {{ cfg.database|yaml(False)|indent(8) }}
     - require:
-      - svn: redmine_{{ instance }}_repo
+      - git: redmine_{{ instance }}_repo
 
 redmine_{{ instance }}_configuration:
   file.managed:
@@ -105,7 +107,7 @@ redmine_{{ instance }}_configuration:
     - contents: |
         {{ cfg.configuration|yaml(False)|indent(8) }}
     - require:
-      - svn: redmine_{{ instance }}_repo
+      - git: redmine_{{ instance }}_repo
 
 redmine_{{ instance }}_bundle_install:
   cmd.run:
@@ -113,7 +115,7 @@ redmine_{{ instance }}_bundle_install:
     - cwd: {{ instance_dir }}
     - runas: {{ setup_user }}
     - onchanges:
-      - svn: redmine_{{ instance }}_repo
+      - git: redmine_{{ instance }}_repo
 
 redmine_{{ instance }}_bundle_update:
   cmd.run:
@@ -123,7 +125,7 @@ redmine_{{ instance }}_bundle_update:
     - require:
       - cmd: redmine_{{ instance }}_bundle_install
     - onchanges:
-      - svn: redmine_{{ instance }}_repo
+      - git: redmine_{{ instance }}_repo
 
 redmine_{{ instance }}_generate_secret_token:
   cmd.run:
@@ -131,7 +133,7 @@ redmine_{{ instance }}_generate_secret_token:
     - cwd: {{ instance_dir }}
     - runas: {{ setup_user }}
     - onchanges:
-      - svn: redmine_{{ instance }}_repo
+      - git: redmine_{{ instance }}_repo
     - require:
       - cmd: redmine_{{ instance }}_bundle_install
 
@@ -143,7 +145,7 @@ redmine_{{ instance }}_database_migration:
     - cwd: {{ instance_dir }}
     - runas: {{ setup_user }}
     - onchanges:
-      - svn: redmine_{{ instance }}_repo
+      - git: redmine_{{ instance }}_repo
     - require:
       - cmd: redmine_{{ instance }}_bundle_install
       - cmd: redmine_{{ instance }}_generate_secret_token
@@ -157,7 +159,7 @@ redmine_{{ instance }}_load_default_data:
     - cwd: {{ instance_dir }}
     - runas: {{ setup_user }}
     - onchanges:
-      - svn: redmine_{{ instance }}_repo
+      - git: redmine_{{ instance }}_repo
     - require:
       - cmd: redmine_{{ instance }}_bundle_install
       - cmd: redmine_{{ instance }}_database_migration
