@@ -22,8 +22,10 @@ redmine:
     work:
       # Keep those up to date!
       # See https://www.redmine.org/projects/redmine/wiki/Download for new releases!
-      svn_uri: https://svn.redmine.org/redmine/branches/3.4-stable
-      revision: HEAD
+      git_uri: https://github.com/redmine/redmine.git
+      branch: 4.0-stable
+      #revision: HEAD
+      revision: 4.0-stable
 
       web_user: www-data
       web_group: www-data
