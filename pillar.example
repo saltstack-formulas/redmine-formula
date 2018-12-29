@@ -24,7 +24,8 @@ redmine:
       # See https://www.redmine.org/projects/redmine/wiki/Download for new releases!
       git_uri: https://github.com/redmine/redmine.git
       branch: 4.0-stable
-      revision: HEAD
+      #revision: HEAD
+      revision: 4.0-stable
 
       web_user: www-data
       web_group: www-data
