@@ -3,7 +3,7 @@
 
 redmine_dependencies:
   pkg.installed:
-    - pkgs: {{ defaults.dependencies }}
+    - pkgs: {{ defaults.dependencies | json }}
 
 {% set setup_group = defaults.setup_group %}
 

@@ -6,7 +6,7 @@
 
 redmine_gitolite_perl_db_driver_pkgs:
   pkg.installed:
-    - pkgs: {{ defaults.db_driver_pkgs }}
+    - pkgs: {{ defaults.db_driver_pkgs | json }}
 
 {{ defaults.apache_redmine_dir }}:
   file.directory: []
