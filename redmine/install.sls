@@ -109,21 +109,22 @@ redmine_{{ instance }}_configuration:
     - require:
       - git: redmine_{{ instance }}_repo
 
-redmine_{{ instance }}_bundle_install:
-  cmd.run:
-    - name: bundle install --without development test --path vendor/bundle
-    - cwd: {{ instance_dir }}
-    - runas: {{ setup_user }}
-    - onchanges:
-      - git: redmine_{{ instance }}_repo
-
 redmine_{{ instance }}_bundle_update:
   cmd.run:
     - name: bundle update
     - cwd: {{ instance_dir }}
     - runas: {{ setup_user }}
+    - onlyif: test -d {{ instance_dir }}/vendor/bundle/ruby/
+    - onchanges:
+      - git: redmine_{{ instance }}_repo
+
+redmine_{{ instance }}_bundle_install:
+  cmd.run:
+    - name: bundle install --without development test --path vendor/bundle
+    - cwd: {{ instance_dir }}
+    - runas: {{ setup_user }}
     - require:
-      - cmd: redmine_{{ instance }}_bundle_install
+      - cmd: redmine_{{ instance }}_bundle_update
     - onchanges:
       - git: redmine_{{ instance }}_repo
 
