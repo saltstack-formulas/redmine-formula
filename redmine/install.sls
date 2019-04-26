@@ -111,18 +111,17 @@ redmine_{{ instance }}_configuration:
 
 redmine_{{ instance }}_bundle_update:
   cmd.run:
-    - name: bundle update
+    # Prevents SecurityError when calling /usr/local/bin/bundle
+    - name: su -m {{ setup_user }} -c 'bundle update'
     - cwd: {{ instance_dir }}
-    - runas: {{ setup_user }}
     - onlyif: test -d {{ instance_dir }}/vendor/bundle/ruby/
     - onchanges:
       - git: redmine_{{ instance }}_repo
 
 redmine_{{ instance }}_bundle_install:
   cmd.run:
-    - name: bundle install --without development test --path vendor/bundle
+    - name: su -m {{ setup_user }} -c 'bundle install --without development test --path vendor/bundle'
     - cwd: {{ instance_dir }}
-    - runas: {{ setup_user }}
     - require:
       - cmd: redmine_{{ instance }}_bundle_update
     - onchanges:
@@ -130,9 +129,8 @@ redmine_{{ instance }}_bundle_install:
 
 redmine_{{ instance }}_generate_secret_token:
   cmd.run:
-    - name: bundle exec rake generate_secret_token
+    - name: su -m {{ setup_user }} -c 'bundle exec rake generate_secret_token'
     - cwd: {{ instance_dir }}
-    - runas: {{ setup_user }}
     - onchanges:
       - git: redmine_{{ instance }}_repo
     - require:
@@ -140,11 +138,10 @@ redmine_{{ instance }}_generate_secret_token:
 
 redmine_{{ instance }}_database_migration:
   cmd.run:
-    - name: bundle exec rake db:migrate
+    - name: su -m {{ setup_user }} -c 'bundle exec rake db:migrate'
     - env:
       - RAILS_ENV: production
     - cwd: {{ instance_dir }}
-    - runas: {{ setup_user }}
     - onchanges:
       - git: redmine_{{ instance }}_repo
     - require:
@@ -153,12 +150,11 @@ redmine_{{ instance }}_database_migration:
 
 redmine_{{ instance }}_load_default_data:
   cmd.run:
-    - name: bundle exec rake redmine:load_default_data
+    - name: su -m {{ setup_user }} -c 'bundle exec rake redmine:load_default_data'
     - env:
       - RAILS_ENV: production
       - REDMINE_LANG: {{ cfg.get('language', 'en') }}
     - cwd: {{ instance_dir }}
-    - runas: {{ setup_user }}
     - onchanges:
       - git: redmine_{{ instance }}_repo
     - require:
