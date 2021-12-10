@@ -16,6 +16,7 @@ redmine:
     # Only for redmine.apache.gitolite_config_snippets
     db_driver_pkgs:
       - p5-DBD-mysql
+    apache_reload_id: apache-service-running-reload
 
   instances:
     # The instance's name
