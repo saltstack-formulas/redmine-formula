@@ -16,5 +16,5 @@
         instance_dir: {{ instance_dir }}
         apache_alias: {{ cfg.get('apache_alias', False) }}
     - watch_in:
-      - module: apache-reload
+      - module: {{ defaults.apache_reload_id }}
 {% endfor %}

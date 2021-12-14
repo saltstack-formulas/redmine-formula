@@ -36,7 +36,7 @@ redmine_gitolite_perl_db_driver_pkgs:
       - file: {{ defaults.apache_redmine_dir }}
       - file: {{ defaults.apache_redmine_dir }}/perl_modules
     - watch_in:
-      - module: apache-reload
+      - module: {{ defaults.apache_reload_id }}
 
 {# Script must be within suexec's doc root. See suexec -V. #}
 {{ defaults.apache_suexec_docroot }}/gitolite:
@@ -90,6 +90,6 @@ redmine_gitolite_perl_db_driver_pkgs:
         RedmineDbUser: {{ cfg.get('RedmineDbUser') }}
         RedmineDbPass: {{ cfg.get('RedmineDbPass') }}
     - watch_in:
-      - module: apache-reload
+      - module: {{ defaults.apache_reload_id }}
 {% endfor %}
 

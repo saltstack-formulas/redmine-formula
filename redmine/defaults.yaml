@@ -10,3 +10,4 @@ redmine:
   db_driver_pkgs: []
   git_user: git
   git_group: git
+  apache_reload_id: apache-service-running-reload
