@@ -11,7 +11,7 @@ redmine:
     web_group: www-data
     # Packages which must be installed
     dependencies:
-      - subversion
+      #- subversion
       - git-core
     # Only for redmine.apache.gitolite_config_snippets
     db_driver_pkgs:
